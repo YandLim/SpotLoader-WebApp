@@ -1,9 +1,20 @@
 {% extends "base.html" %}
-{% block title %}Homee{% endblock %}
+{% block title %}The Searcher{% endblock %}
 
 {% block styles %}
+    body {
+        background-color: #202F2D;
+    }
+
     #MainTitle {
         margin-top: 20px;
+        color: #CACACA;
+    }
+
+    #abouttitle {
+        text-align: left;
+        margin: 0px;
+        margin-bottom: 10px;
     }
 
     #LoginBTN {
@@ -23,44 +34,61 @@
         font-size: 20px;
         margin: 0 auto;
         margin-bottom: 50px;
+        text-decoration: none;
     }
 
     #LoginBTN:hover {
         background-color: #17a34a; /* Darker Green on Hover */
     }
 
+    .maincontainer {
+        width: 80%;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+        background-color: #f8f8f8;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: #202528;
+    }
+
     .Title {
         text-align: center;
         margin: 50px;
+        color: #CACACA;
     }
 
     .Pharagraph {
-        text-align: justify;
+        text-align: left;
+        color: #CACACA;
     }
 {% endblock %}
 
 {% block content %}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for msg in messages %}
-                <p>{{msg}}</p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+    <div class="maincontainer">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <p>{{msg}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
-    <h1 class="Title", id="MainTitle">
-        <b>Hello There Welcome to <br/>The Spotify Searcher</b>
-    </h1>
-    <h2>
-        About
-    </h2>
-    <p class="Pharagraph">
-        The Spotify Searcher is web application you can search for song and will get the <br/>spotify link along with the information about the song
-    </p>   
-    <h2 class="Title">
-        Please login to proceed
-    </h2>
-    <a href="/login" id="LoginBTN">
-        Login
-    </a>
+        <h1 class="Title", id="MainTitle">
+            <b>Hello There Welcome to <br/>The Spotify Searcher</b>
+        </h1>
+        <h2 id="abouttitle" class="Title">
+            About
+        </h2>
+        <p class="Pharagraph">
+            The Spotify Searcher is web application you can search for song and will get the <br/>spotify link along with the information about the song
+        </p>   
+        <h2 class="Title">
+            Please login to proceed
+        </h2>
+        <a href="/login" id="LoginBTN">
+            Login
+        </a>
+    </div>
 {% endblock %}
