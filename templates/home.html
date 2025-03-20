@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Homee{% endblock %}
+
+{% block styles %}
+    #MainTitle {
+        margin-top: 20px;
+    }
+
+    #LoginBTN {
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        background-color: #1DB954;
+        color: Black;
+        font-family: "Arial Black";
+        padding: 10px 0px;
+        width: 380px;
+        height: 15px
+        border: none;
+        border-radius: 50px;
+        box-sizing: border-box;
+        cursor: pointer;
+        font-size: 20px;
+        margin: 0 auto;
+        margin-bottom: 50px;
+    }
+
+    #LoginBTN:hover {
+        background-color: #17a34a; /* Darker Green on Hover */
+    }
+
+    .Title {
+        text-align: center;
+        margin: 50px;
+    }
+
+    .Pharagraph {
+        text-align: justify;
+    }
+{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <h1 class="Title", id="MainTitle">
+        <b>Hello There Welcome to <br/>The Spotify Searcher</b>
+    </h1>
+    <h2>
+        About
+    </h2>
+    <p class="Pharagraph">
+        The Spotify Searcher is web application you can search for song and will get the <br/>spotify link along with the information about the song
+    </p>   
+    <h2 class="Title">
+        Please login to proceed
+    </h2>
+    <a href="/login" id="LoginBTN">
+        Login
+    </a>
+{% endblock %}
