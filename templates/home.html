@@ -16,9 +16,9 @@
     }
 
     .navbar-toggler {
-    background-color: transparent; /* Keeps button transparent */
-    border: 2px solid black; /* White border */
-    padding: 5px; /* Adds some spacing */
+        background-color: transparent; /* Keeps button transparent */
+        border: 2px solid black; /* White border */
+        padding: 5px; /* Adds some spacing */
     }
 
     .navbar-toggler-icon {
@@ -86,32 +86,30 @@
         text-align: left;
         color: #CACACA;
     }
+
+    #flash-msgs {
+        color: white;
+        text-align: center;
+    }
 {% endblock %}
 
 {% block content %}
     <div class="maincontainer">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for msg in messages %}
-                    <p>{{msg}}</p>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-
-        <h1 class="Title", id="MainTitle">
-            <b>Hello There Welcome to <br/>The Spotify Searcher</b>
-        </h1>
-        <h2 id="abouttitle" class="Title">
-            About
-        </h2>
+        <div id="flash-msgs">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                        <p>{{msg}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <h1 class="Title", id="MainTitle"><b>Hello There Welcome to <br/>The Spotify Searcher</b></h1>
+        <h2 id="abouttitle" class="Title">About</h2>
         <p class="Pharagraph">
             The Spotify Searcher is web application you can search for song and will get the <br/>spotify link along with the information about the song
         </p>   
-        <h2 class="Title">
-            Please login to proceed
-        </h2>
-        <a href="/login" id="LoginBTN">
-            Login
-        </a>
+        <h2 class="Title">Please login to proceed</h2>
+        <a href="/login" id="LoginBTN">Login</a>
     </div>
 {% endblock %}
