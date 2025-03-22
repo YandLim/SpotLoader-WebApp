@@ -26,14 +26,17 @@ def login():
                 })
 
                 flash("Login succesfully", "info")
-                return redirect(url_for("home"))
+                return redirect(url_for("main_page"))
+            else:
+                flash("Wrong password. Please try again")
+                return render_template("login.html")
         except:
             flash("Couldn't find the email", "info")
             return render_template("login.html")
     else:
         if "email" in session and "password" in session:
             flash("Welcome back", "info")
-            return redirect(url_for("home"))
+            return redirect(url_for("main_page"))
         else:
             return render_template("login.html")
     
@@ -52,6 +55,17 @@ def register():
     else:
         return render_template("register.html")
 
+
+@app.route("/searcher", methods=["POST", "GET"])
+def main_page():
+    if request.method == "POST":
+        entry_song = request.form["song-input"]
+        print(entry_song)
+        return render_template("search.html", search_result=f"So you are looking for {entry_song} right?")
+    else:
+        if "email" not in session and "password" not in session:
+            return redirect(url_for("login"))
+        return render_template("search.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

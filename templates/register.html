@@ -19,10 +19,10 @@
         .Login-container {
             margin-top: 50px;
             margin-bottom: 50px;
-            background-color: #202528;
+            background-color: #202823;
             padding: 30px;
             border-radius: 20px;
-            width: 100%;
+            width: 90%;
             max-width: 450px;
             box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
         }
@@ -36,6 +36,13 @@
 
         .form-control::placeholder {
             color: #1DB954;
+        }
+
+        .form-control:focus {
+            background: rgb(28, 26, 26) !important; /* Prevent background change */
+            color: white !important; /* Prevent text color change */
+            border: 1px solid #1DB954; /* Optional: Add a green border for focus */
+            outline: none; /* Remove default blue focus outline */
         }
 
         .btn {
@@ -53,6 +60,10 @@
             background-color: #1e8644; /* Darker Green on Hover */
         }
 
+        .form-control {
+            color: #1DB954;
+        }
+
         #register-btn {
             margin-bottom: 6px;
             width: 100px;
@@ -68,18 +79,18 @@
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" required>
             </div>
             <div class="form-group">
-                
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
             </div>
             <div class="form-group">
-                <div class="row justify-content-center">
-                    <!-- Gender Field -->
-                    <div class="col-6 col-sm-5">
+                <div class="row">
+                    <!-- Name Field -->
+                    <div class="col-md-6">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" required>   
                     </div>     
-                    <div class="col-6 col-sm-5">
+                    <!-- Gender Field -->
+                    <div class="col-md-6">
                         <label for="gender">Gender</label>
                         <select class="form-control" id="gender" name="gender" required>
                             <option value="" disabled selected>Select Gender</option>
@@ -88,13 +99,18 @@
                             <option value="O">Other</option>
                         </select>
                     </div>
-                    <div class="col-6 col-sm-5">
+                </div>
+                <div class="row mt-2">
+                    <!-- Date of Birth Field (Full Width) -->
+                    <div class="col-12">
                         <label for="dob">Date of Birth</label>
                         <input type="date" class="form-control" id="dob" name="dob" required>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn">Register</button>
+            <div class="text-center">
+                <button type="submit" class="btn">Register</button>
+            </div>
         </form>
         <h5 class="text-center">Doesn't have account yet?</h5>
         <a href="/login" class="btn" id="register-btn">Login</a>
