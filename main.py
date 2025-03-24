@@ -1,71 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from database import Database
-
+from flask import Flask
+from config import Config
+from routes.users import users_bp
+from routes.function import function_bp
 
 app = Flask(__name__)
-app.secret_key = "Spot"
-db = Database()
+app.config.from_object(Config)
+app.secret_key = app.config["SECRET_KEY"]
 
-
-@app.route("/")
-def home():
-    return render_template("home.html")
-
-
-@app.route("/login", methods=["POST", "GET"])
-def login():
-    if request.method == "POST":
-        user_email = request.form["email"].lower()
-        user_passw = request.form["password"]
-        try:
-            db_user_data = db.call_data("Users", "password", "email", user_email)
-            if user_passw == db_user_data[0]:
-                session.update({
-                "email": user_email,
-                "password": user_passw,
-                })
-
-                flash("Login succesfully", "info")
-                return redirect(url_for("main_page"))
-            else:
-                flash("Wrong password. Please try again")
-                return render_template("login.html")
-        except:
-            flash("Couldn't find the email", "info")
-            return render_template("login.html")
-    else:
-        if "email" in session and "password" in session:
-            flash("Welcome back", "info")
-            return redirect(url_for("main_page"))
-        else:
-            return render_template("login.html")
-    
-
-@app.route("/register", methods=["POST", "GET"])
-def register():
-    if request.method == "POST":
-        user_email = request.form["email"].lower()
-        user_passw = request.form["password"]
-        user_name = request.form["name"]
-        user_gender = request.form["gender"].upper()
-        user_dob = request.form["dob"]
-
-        db.add_user(user_email, user_passw, user_name, user_gender, user_dob)
-        return redirect(url_for("home"))
-    else:
-        return render_template("register.html")
-
-
-@app.route("/searcher", methods=["POST", "GET"])
-def main_page():
-    if request.method == "POST":
-        entry_song = request.form["song-input"]
-        print(entry_song)
-        return render_template("search.html", search_result=f"So you are looking for {entry_song} right?")
-    else:
-        if "email" not in session and "password" not in session:
-            return redirect(url_for("login"))
-        return render_template("search.html")
+app.register_blueprint(users_bp)
+app.register_blueprint(function_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)

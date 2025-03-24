@@ -10,7 +10,8 @@
     #abouttitle {
         text-align: left;
         margin: 0px;
-        margin-bottom: 10px;
+        padding : 25px;
+        margin 10px;
     }
 
     #LoginBTN:hover {
@@ -19,7 +20,7 @@
 
     .maincontainer {
         width: 80%;
-        max-width: 700px;
+        max-width: 1000px;
         margin: 0 auto;
         margin-bottom: 20px;
         padding: 20px;
@@ -39,6 +40,12 @@
         text-align: left;
         color: #CACACA;
         font-family: "Open Sans";
+        margin-left: 50px;
+    }
+
+    .search-pharagraph {
+        margin: 10px 0;
+        margin-left: 50px;
     }
 
     .container {
@@ -48,7 +55,7 @@
         font-family: Ahorani;
         font-size: 25px;
         width: 98%;
-        max-width: 700px;
+        max-width: 900px;
         margin: 0 auto;
         padding: 50px;
         border: 7px solid #141918;
@@ -79,7 +86,7 @@
     #song-name {
         align-items: flex-start;
         justify-content: flex-start;
-        width: 100%;
+        width: 50%;
         border: 5px solid #143532;
     }
 
@@ -87,11 +94,13 @@
         display: flex;
         align-items: center;
         gap: 10px; /* Adds space between input and button */
+
     }
     
-    .search-container input {
+    .search-container #song-name {
         flex: 1; /* Makes input take up available space */
     }
+    
     
     .search-container button {
         white-space: nowrap; /* Prevents button text from breaking */
@@ -103,13 +112,65 @@
     }
 
     #search-results {
-        max-width: 450px;
-        background-color: #203F42;
+        display: flex;
+        margin: 10px;
+        max-width: 850px;
+        background-color: #171717;
         width: 100%; /* Make it take full width */
-        margin-top: 35px;
-        padding: 10px;
+        padding: 50px;
         border-radius: 5px;
         text-align: left;
+        margin-top: 10px;
+        flex-direction: column;
+    }
+
+    .cover_pic {
+        width: 200px;
+        margin-bottom: 5px;
+    }
+
+    .content-wrapper {
+        display: flex;
+        gap: 15px; /* Beri jarak antara teks dan gambar */
+        margin-top: 15px;
+        margin-left: 10px;
+    }    
+
+    .result {
+        margin-top: 0;
+        margin-bottom: 45px;
+    }
+
+    .song-data {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        font-size: 18px;
+    }
+
+    .song-data p{
+        margin: 5px 0;
+    }
+
+    a {
+        color: #17a34a; /* Warna hijau lebih gelap saat hover */
+        text-decoration: underline;
+    }
+
+    a:hover {
+        color: #1e8644; /* Warna ungu setelah link dikunjungi */
+    }
+
+    .song-links {
+        display: flex;
+        gap: 5px;
+        margin-top: 8px;
+        margin-left: 25px;
+    }
+
+    #result-qty {
+        width: 25%;
+        border: 5px solid #143532;
     }
 {% endblock %}
 
@@ -126,15 +187,59 @@
         </div>
         <h1 class="Title", id="MainTitle"><b>The Spotify Searcher</b></h1>
         <div class="container">
-            <form  method="post" class="form-group search-container">
+            <form method="post" class="form-group search-container">
                 <label for="song-name">Song Name</label>
-                <input type="text" id="song-name" class="form-control" name="song-input" placeholder="Enter song name">
+                <input type="text" id="song-name" class="form-control" name="song-input" placeholder="Enter song name" required>
+                <input type="number" class="form-control" id="result-qty" name="result-qty" placeholder="Number of result" min="2" max="20">            
                 <button class="btn btn-success">Search</button>
             </form>
-
-            {% if search_result %}
-                <div id="search-results" class="Pharagraph">
-                    <p>{{ search_result }}</p>
+            {% if songs_data %}
+                <label for="search-results">Search Results</label>
+                <div id="search-results" class="Pharagraph search-pharagraph">
+                    <p>Top Result</p>
+                    {% for item in songs_data %}
+                        {% if loop.index0 == 0 %}  {# First item #}
+                            <div class="result">
+                                <div class="content-wrapper">
+                                    <img class="cover_pic" src="{{ item[5] if item[5] else '/static/default.png' }}" alt="Song's Cover picture">
+                                    <div class="song-data">
+                                        <p>Song: {{ item[0] }}</p>
+                                        <p>Artists: 
+                                            {% for artist in item[1] %}
+                                                {{ artist }}{% if not loop.last %}, {% endif %}
+                                            {% endfor %}
+                                        </p>
+                                        <p>Release: {{ item[4] }}</p>
+                                        <p>Album: {{ item[3] }}</p>
+                                    </div>
+                                </div>  
+                                <div class="song-links">
+                                    <a href="{{ item[2] }}">Spotify link</a>  
+                                </div>
+                            </div>
+                            <p>Results</p> 
+                            
+                        {% else %}
+                            <div class="result">
+                                <div class="content-wrapper">
+                                    <img class="cover_pic" src="{{ item[5] if item[5] else '/static/default.png' }}" alt="Song's Cover picture">
+                                    <div class="song-data">
+                                        <p>Song: {{ item[0] }}</p>
+                                        <p>Artists: 
+                                            {% for artist in item[1] %}
+                                                {{ artist }}{% if not loop.last %}, {% endif %}
+                                            {% endfor %}
+                                        </p>
+                                        <p>Release: {{ item[4] }}</p>
+                                        <p>Album: {{ item[3] }}</p>
+                                    </div>
+                                </div>  
+                                <div class="song-links">
+                                    <a href="{{ item[2] }}">Spotify link</a>   
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             {% endif %}
 
