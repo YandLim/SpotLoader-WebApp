@@ -154,10 +154,6 @@ def song_downloader():
 
 @function_bp.route("/run_download", methods=["POST"])
 def download_clicked():
-    global download_progress
-    session_id = session.get("session_id", "default")
-    download_progress[session_id] = 0  # Reset progress    sanitize_name = []
-
     sanitize_name = []
     youtube_links = []
     song_file_name = []
