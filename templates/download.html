@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block extra_css %} <link rel="stylesheet" href="{{ url_for ('static', filename='css/download.css') }}"> {% endblock %}
+{% block title %}The Searcher{% endblock %}
+
+{% block content %}
+    <div class="maincontainer">
+        <div id="flash-msgs">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                        <p>{{msg}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <h1 class="Title", id="MainTitle"><b>The Spotify Downloader</b></h1>
+        <div class="container">
+            <form method="post" class="form-group search-container">
+                <label for="song-link">Spotify link</label>
+                <input type="text" id="song-link" class="form-control" name="link-input" placeholder="Enter spotify song's link" required>
+                <button class="btn btn-success">Search</button>
+            </form>
+            {% if status %}
+                <label for="search-results">Search Results</label>
+                <div id="search-results" class="Pharagraph search-pharagraph">
+                    {% if type == "album" %}
+                        <p>Found album with {{ found_song|length }} songs</p>
+                        <div class="result">
+                            <div class="content-wrapper">
+                                <img class="cover_pic" src="{{ thumbnail if thumbnail is defined else '/static/default.png' }}" alt="Song's Cover picture">
+                                <div class="song-data">
+                                    <p>Album Name: {{ album_name }}</p>
+                                    <p>Artists:
+                                        {% for artist in artists %}
+                                            {{ artist }}{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </p>
+                                    
+                                    <button class="btn btn-success" id="see-all-BTN">See All Songs</button>
+                                    <div id="see-all-popup" class="popup">
+                                        <div class="popup-content">
+                                            <span class="close">&times;</span>
+                                            <h2>{{ album_name }}</h2>
+                                            {% for song in found_song %}
+                                                <p>{{ loop.index }}.{{ song }}<br/></p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-success download-BTN" id="download-album-BTN" data-song-type="album">Download Album</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p id="downloading-text"></p>
+                        <script src="{{ url_for ('static', filename='javascript/download.js') }}"></script>
+
+                    {% elif type == "playlist" %}
+                        <p>Found playlist with {{ found_song|length }} songs</p>
+                        <div class="result">
+                            <div class="content-wrapper">
+                                <img class="cover_pic" src="{{ playlist_thumbnail if playlist_thumbnail is defined else '/static/default.png' }}" alt="Song's Cover picture">
+                                <div class="song-data">
+                                    <p>Playlist Name: {{ playlist_name }}</p>
+                                    <p>Owner/Maker: {{ owner }}
+                                    </p>
+                                    
+                                    <button class="btn btn-success" id="see-all-BTN">See All Songs</button>
+                                    <div id="see-all-popup" class="popup">
+                                        <div class="popup-content">
+                                            <span class="close">&times;</span>
+                                            <h2>{{ playlist_name }}</h2>
+                                            {% for song in found_song %}
+                                                <p>{{ loop.index }}.{{ song }}<br/></p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-success download-BTN" id="download-playlist-BTN" data-song-type="album">Download Playlist</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p id="downloading-text"></p>
+                        <script src="{{ url_for ('static', filename='javascript/download.js') }}"></script>
+
+                    {% elif type == "song" %}
+                        <div class="result">
+                            <div class="content-wrapper">
+                                <img class="cover_pic" src="{{ thumbnail if thumbnail is defined else '/static/default.png' }}" alt="Song's Cover picture">
+                                <div class="song-data">
+                                    <p>Song Name: {{ found_song }}</p>
+                                    <p>Artists:
+                                        {% for artist in artists %}
+                                            {{ artist }}{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </p>  
+                                    <p><br/><br/></p>
+                                    <button class="btn btn-success download-BTN" id="download-song-BTN" data-song-type="song">Download Song</button>
+                                    <script src="{{ url_for ('static', filename='javascript/download.js') }}"></script>
+                                </div>
+                            </div>
+                        </div>
+                        <p id="downloading-text"></p>
+                        <script src="{{ url_for ('static', filename='javascript/download.js') }}"></script>
+                    {% endif %}
+                </div>
+
+            {% else %}
+                <label for="search-results">Search Results</label>
+                <div id="search-results" class="Pharagraph search-pharagraph">
+                    <p>The acceptable link is spotify's link from<br/>1. A song<br/>2. A Playlist<br/>3. A Album</p>
+                    <p><br/>If problems keep happening, Please contact the developer by email or WhatsApp. Thank you 😊</p>
+                </div>
+            {% endif %}
+
+        </div>
+        <h2 id="abouttitle" class="Title">About</h2>
+        <p class="Pharagraph">
+            Download spotify song using song's link. And yes you can download album and playlist as well.
+        </p>   
+    </div>
+{% endblock %}
+

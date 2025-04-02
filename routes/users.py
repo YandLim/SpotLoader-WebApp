@@ -4,6 +4,12 @@ from function.database import Database
 users_bp = Blueprint("users", __name__)
 db = Database()
 
+
+@users_bp.route("/")
+def home():
+    return render_template("home.html")
+
+
 @users_bp.route("/login", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
@@ -18,7 +24,11 @@ def login():
                 })
 
                 flash("Login succesfully", "info")
-                return redirect(url_for("function.main_page"))
+                if session["destination"] == "search":
+                    return redirect(url_for("function.main_page"))
+                
+                else:
+                    return redirect(url_for("function.song_downloader"))
             else:
                 flash("Wrong password. Please try again")
                 return render_template("login.html")

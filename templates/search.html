@@ -1,178 +1,6 @@
 {% extends "base.html" %}
+{% block extra_css %} <link rel="stylesheet" href="{{ url_for ('static', filename='css/search.css') }}"> {% endblock %}
 {% block title %}The Searcher{% endblock %}
-
-{% block styles %}
-    #MainTitle {
-        margin-top: 20px;
-        color: #CACACA;
-    }
-
-    #abouttitle {
-        text-align: left;
-        margin: 0px;
-        padding : 25px;
-        margin 10px;
-    }
-
-    #LoginBTN:hover {
-        background-color: #17a34a; /* Darker Green on Hover */
-    }
-
-    .maincontainer {
-        width: 80%;
-        max-width: 1000px;
-        margin: 0 auto;
-        margin-bottom: 20px;
-        padding: 20px;
-        text-align: center;
-        border-radius: 10px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        background-color: #202528;
-    }
-
-    .Title {
-        text-align: center;
-        margin: 50px;
-        color: #CACACA;
-    }
-
-    .Pharagraph {
-        text-align: left;
-        color: #CACACA;
-        font-family: "Open Sans";
-        margin-left: 50px;
-    }
-
-    .search-pharagraph {
-        margin: 10px 0;
-        margin-left: 50px;
-    }
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        color: #CACACA;
-        font-family: Ahorani;
-        font-size: 25px;
-        width: 98%;
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 50px;
-        border: 7px solid #141918;
-        border-radius: 10px;
-        background-color: #5F7A75;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 50px;
-    }
-
-    .form-control {
-        background: #304341;
-        color: white;
-        border: none;
-        font-family: "Ahorani";
-    }
-
-    .form-control::placeholder {
-        color: gray;
-    }
-
-    .form-control:focus {
-        background: #304341 !important; /* Prevent background change */
-        color: white !important; /* Prevent text color change */
-        border: 1px solid #1DB954; /* Optional: Add a green border for focus */
-        outline: none; /* Remove default blue focus outline */
-    }
-
-    #song-name {
-        align-items: flex-start;
-        justify-content: flex-start;
-        width: 50%;
-        border: 5px solid #143532;
-    }
-
-    .search-container {
-        display: flex;
-        align-items: center;
-        gap: 10px; /* Adds space between input and button */
-
-    }
-    
-    .search-container #song-name {
-        flex: 1; /* Makes input take up available space */
-    }
-    
-    
-    .search-container button {
-        white-space: nowrap; /* Prevents button text from breaking */
-    }
-
-    #flash-msgs {
-        color: white;
-        text-align: center;
-    }
-
-    #search-results {
-        display: flex;
-        margin: 10px;
-        max-width: 850px;
-        background-color: #171717;
-        width: 100%; /* Make it take full width */
-        padding: 50px;
-        border-radius: 5px;
-        text-align: left;
-        margin-top: 10px;
-        flex-direction: column;
-    }
-
-    .cover_pic {
-        width: 200px;
-        margin-bottom: 5px;
-    }
-
-    .content-wrapper {
-        display: flex;
-        gap: 15px; /* Beri jarak antara teks dan gambar */
-        margin-top: 15px;
-        margin-left: 10px;
-    }    
-
-    .result {
-        margin-top: 0;
-        margin-bottom: 45px;
-    }
-
-    .song-data {
-        display: flex;
-        flex-direction: column;
-        text-align: left;
-        font-size: 18px;
-    }
-
-    .song-data p{
-        margin: 5px 0;
-    }
-
-    a {
-        color: #17a34a; /* Warna hijau lebih gelap saat hover */
-        text-decoration: underline;
-    }
-
-    a:hover {
-        color: #1e8644; /* Warna ungu setelah link dikunjungi */
-    }
-
-    .song-links {
-        display: flex;
-        gap: 5px;
-        margin-top: 8px;
-        margin-left: 25px;
-    }
-
-    #result-qty {
-        width: 25%;
-        border: 5px solid #143532;
-    }
-{% endblock %}
 
 {% block content %}
     <div class="maincontainer">
@@ -201,7 +29,7 @@
                         {% if loop.index0 == 0 %}  {# First item #}
                             <div class="result">
                                 <div class="content-wrapper">
-                                    <img class="cover_pic" src="{{ item[5] if item[5] else '/static/default.png' }}" alt="Song's Cover picture">
+                                    <img class="cover_pic" src="{{ item[5] if item is defined else '/static/default.png' }}" alt="Song's Cover picture">
                                     <div class="song-data">
                                         <p>Song: {{ item[0] }}</p>
                                         <p>Artists: 
@@ -215,6 +43,7 @@
                                 </div>  
                                 <div class="song-links">
                                     <a href="{{ item[2] }}">Spotify link</a>  
+                                    <a href="{{ item[6] }}">Youtube link</a>
                                 </div>
                             </div>
                             <p>Results</p> 
@@ -222,7 +51,7 @@
                         {% else %}
                             <div class="result">
                                 <div class="content-wrapper">
-                                    <img class="cover_pic" src="{{ item[5] if item[5] else '/static/default.png' }}" alt="Song's Cover picture">
+                                    <img class="cover_pic" src="{{ item[5] if item is defined else '/static/default.png' }}" alt="Song's Cover picture">
                                     <div class="song-data">
                                         <p>Song: {{ item[0] }}</p>
                                         <p>Artists: 
@@ -236,17 +65,24 @@
                                 </div>  
                                 <div class="song-links">
                                     <a href="{{ item[2] }}">Spotify link</a>   
+                                    <a href="{{ item[6] }}">Youtube link</a>
                                 </div>
                             </div>
                         {% endif %}
                     {% endfor %}
                 </div>
+
+            {% else %}
+            <label for="search-results">Search Results</label>
+            <div id="search-results" class="Pharagraph search-pharagraph">
+                <p><br/>If problems keep happening, Please contact the developer by email or WhatsApp. Thank you 😊</p>
+            </div>
             {% endif %}
 
         </div>
         <h2 id="abouttitle" class="Title">About</h2>
         <p class="Pharagraph">
-            The Spotify Searcher is web application you can search for song and will get the <br/>spotify link along with the information about the song
+            Search the song by using name and get the result up to 20 songs and the related link for the songs.
         </p>   
     </div>
 {% endblock %}
