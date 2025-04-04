@@ -49,9 +49,16 @@
 
 #downloading-progress {
     display: none;
+    width: 50%; 
+    height: 50px;
 }
+
 #status-text {
     display: none;
+}
+
+#progress-precentage {
+    display: none;    
 }
 
 .download-BTN {
@@ -228,4 +235,5 @@ a:hover {
 
 .Status-Progress {
     text-align: center;
+    margin: 10px auto; /* Auto untuk center horizontal */
 }

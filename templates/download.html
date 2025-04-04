@@ -50,10 +50,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="Status-Progress">
-                            <p id="downloading-progress">Downloading... 0%</p>
-                            <p id="status-text">Waiting...</p>    
-                        </div>
+                        <label class="Status-Progress" for="downloading-progress" id="progress-precentage">0%</label>
+                        <progress class="Status-Progress" id="downloading-progress" value="0" max="100"></progress>
+                        <p class="Status-Progress" id="status-text">Waiting...</p>    
                         <script src="{{ url_for ('static', filename='javascript/download.js') }}"></script>
 
                     {% elif type == "playlist" %}
@@ -80,10 +79,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="Status-Progress">
-                            <p id="downloading-progress">Downloading... 0%</p>
-                            <p id="status-text">Waiting...</p>    
-                        </div>
+                        <label class="Status-Progress" for="downloading-progress" id="progress-precentage">0%</label>
+                        <progress class="Status-Progress" id="downloading-progress" value="0" max="100"></progress>
+                        <p class="Status-Progress" id="status-text">Waiting...</p>    
                         <script src="{{ url_for ('static', filename='javascript/download.js') }}"></script>
 
                     {% elif type == "song" %}
@@ -102,10 +100,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="Status-Progress">
-                            <p id="downloading-progress">Downloading... 0%</p>
-                            <p id="status-text">Waiting...</p>    
-                        </div>
+                        <label class="Status-Progress" for="downloading-progress" id="progress-precentage">0%</label>
+                        <progress class="Status-Progress" id="downloading-progress" value="0" max="100"></progress>
+                        <p class="Status-Progress" id="status-text">Waiting...</p>    
                         <script src="{{ url_for ('static', filename='javascript/download.js') }}"></script>
                     {% endif %}
                 </div>

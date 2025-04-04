@@ -46,14 +46,15 @@ try {
 function handleDownload() {
     let btn = this;
     btn.disabled = true; // Nonaktifkan tombol setelah diklik
-    let progressText = document.getElementById("downloading-progress");
+    let progressBar = document.getElementById("downloading-progress");
     let statusText = document.getElementById("status-text"); // Tambahkan elemen untuk status
+    let precentage = document.getElementById("progress-precentage"); // Tambahkan elemen untuk status
 
-    progressText.innerText = "Starting . . .";
     statusText.innerText = "Initializing...";
 
+    precentage.style.display = "block";
     statusText.style.display = "block";
-    progressText.style.display = "block";
+    progressBar.style.display = "block";
 
     let eventSource = new EventSource("/download_progress");
 
@@ -63,7 +64,8 @@ function handleDownload() {
         let status = data[1]; // Ambil status teks
 
         if (!isNaN(progress)) {
-            progressText.innerText = `Downloading ${progress}%`;
+            precentage.innerText = `${progress}%`;
+            progressBar.value = progress
         }
 
         if (status) {
@@ -72,8 +74,9 @@ function handleDownload() {
 
         if (progress >= 100) {
             eventSource.close();
-            progressText.innerText = "✅ Download complete!";
-            statusText.style.display = "none"; // Sembunyikan status-text saat selesai
+            statusText.innerText = "✅ Download complete!";
+            progressBar.style.display = "none"; // Sembunyikan status-text saat selesai
+            precentage.style.display = "none"; // Sembunyikan status-text saat selesai
             btn.disabled = false;            
         }
     };
