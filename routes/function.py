@@ -13,6 +13,7 @@ Zp = zipped()
 
 @function_bp.route("/searcher", methods=["POST", "GET"])
 def main_page():
+    session["destination"] = "search"
     song_names = []
     artists_name = []
     songs_link = []
@@ -51,6 +52,7 @@ def main_page():
 
 @function_bp.route("/downloader", methods=["POST", "GET"])
 def song_downloader():   
+    session["destination"] = "download"
     found_song = []
     thumbnail_url = []
     artist_name = []

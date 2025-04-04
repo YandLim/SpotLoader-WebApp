@@ -7,6 +7,7 @@ db = Database()
 
 @users_bp.route("/")
 def home():
+    session["destination"] = "Home"
     return render_template("home.html")
 
 
@@ -27,8 +28,11 @@ def login():
                 if session["destination"] == "search":
                     return redirect(url_for("function.main_page"))
                 
-                else:
+                elif session["destination"] == "download":
                     return redirect(url_for("function.song_downloader"))
+                
+                else:
+                    return redirect(url_for("home"))
             else:
                 flash("Wrong password. Please try again")
                 return render_template("login.html")
@@ -38,7 +42,14 @@ def login():
     else:
         if "email" in session and "password" in session:
             flash("Welcome back", "info")
-            return redirect(url_for("function.main_page"))
+            if session["destination"] == "search":
+                return redirect(url_for("function.main_page"))
+            
+            elif session["destination"] == "download":
+                return redirect(url_for("function.song_downloader"))
+            
+            else:
+                return redirect(url_for("users.home"))
         else:
             return render_template("login.html")
     
@@ -55,4 +66,26 @@ def register():
         db.add_user(user_email, user_passw, user_name, user_gender, user_dob)
         return redirect(url_for("home"))
     else:
-        return render_template("register.html")
+        if "email" in session and "password" in session:
+            flash("Welcome back", "info")
+            if session["destination"] == "search":
+                return redirect(url_for("function.main_page"))
+            
+            elif session["destination"] == "download":
+                return redirect(url_for("function.song_downloader"))
+            
+            else:
+                return redirect(url_for("users.home"))
+        else:
+            return render_template("login.html")
+    
+
+@users_bp.route("/logout/")
+def logout():
+    if "email" in session and "password" in session:
+        flash("You've been logging out", "info")
+        session.pop("email", None)
+        session.pop("password", None)
+    else:
+        flash("You are not logging in yet")
+    return redirect(url_for("users.home"))

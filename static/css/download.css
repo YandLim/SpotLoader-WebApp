@@ -1,3 +1,12 @@
+a {
+    color: #17a34a; /* Warna hijau lebih gelap saat hover */
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #1e8644; /* Warna ungu setelah link dikunjungi */
+}
+
 #MainTitle {
     margin-top: 20px;
     color: #CACACA;
@@ -26,13 +35,6 @@
     text-align: left;
     margin-top: 10px;
     flex-direction: column;
-}
-
-#song-link {
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 50%;
-    border: 5px solid #143532;
 }
 
 #see-all-BTN {
@@ -92,11 +94,6 @@
     margin-left: 50px;
 }
 
-.search-pharagraph {
-    margin: 10px 0;
-    margin-left: 50px;
-}
-
 .container {
     display: flex;
     flex-direction: column;
@@ -132,22 +129,6 @@
     outline: none; /* Remove default blue focus outline */
 }
 
-.search-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Adds space between input and button */
-
-}
-
-.search-container #song-link {
-    flex: 1; /* Makes input take up available space */
-}
-
-
-.search-container button {
-    white-space: nowrap; /* Prevents button text from breaking */
-}
-
 .cover_pic {
     background-color: white;
     width: 200px;
@@ -161,11 +142,6 @@
     margin-left: 10px;
 }    
 
-.result {
-    margin-top: 0;
-    margin-bottom: 45px;
-}
-
 .song-data {
     display: flex;
     flex-direction: column;
@@ -176,22 +152,6 @@
 
 .song-data p{
     margin: 5px 0;
-}
-
-a {
-    color: #17a34a; /* Warna hijau lebih gelap saat hover */
-    text-decoration: underline;
-}
-
-a:hover {
-    color: #1e8644; /* Warna ungu setelah link dikunjungi */
-}
-
-.song-links {
-    display: flex;
-    gap: 5px;
-    margin-top: 8px;
-    margin-left: 25px;
 }
 
 .popup {

@@ -7,31 +7,42 @@
   {% block extra_css %}{% endblock %}
   <title>{% block title %}{% endblock %}</title>
   <style>
+    body {
+      background-color: #202F2D;
+    }
+
     .navbar {
       background-color: #202F2D;
-        padding: 20px;
+      padding: 20px;
     }
 
     .navbar a {
-        color: white !important;
+      color: white !important;
     }
 
     .navbar-toggler-icon {
-        filter: invert(1);  /* Makes the default icon white */
+      filter: invert(1);  /* Makes the default icon white */
     }
 
     .navbar-toggler {
-        background-color: transparent; /* Keeps button transparent */
-        border: 2px solid black; /* White border */
-        padding: 5px; /* Adds some spacing */
+      background-color: transparent; /* Keeps button transparent */
+      border: 2px solid black; /* White border */
+      padding: 5px; /* Adds some spacing */
     }
 
     .navbar-toggler-icon {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
     }
 
-    body {
-        background-color: #202F2D;
+    .dropdown-menu {
+      background-color: #303233;
+    }
+
+    .dropdown-item:hover,
+    .dropdown-item:focus,
+    .dropdown-item:active {
+    background-color: #4caf50 !important; /* Warna hijau */
+    color: white !important; /* Ubah warna teks */
     }
     {% block styles %}
     {% endblock %}
@@ -39,29 +50,28 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="/">Home</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/searcher">Searcher<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
+            <a class="nav-link" href="/downloader">Downloader</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/logout">Logout</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown link
+              Other
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="/peace">Peacee</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <a class="dropdown-item" href="#">Contact</a>
+              <a class="dropdown-item" href="#">Delete account</a>
             </div>
           </li>
         </ul>

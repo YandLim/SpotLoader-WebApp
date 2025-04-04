@@ -7,7 +7,12 @@ body {
     height: 100vh;
 }
 
-.Login-container {
+#register-btn {
+    margin-bottom: 6px;
+    width: 100px;
+}
+
+.Register-container {
     margin-top: 50px;
     margin-bottom: 50px;
     background-color: #202823;
@@ -53,9 +58,4 @@ body {
 
 .form-control {
     color: #1DB954;
-}
-
-#register-btn {
-    margin-bottom: 6px;
-    width: 100px;
 }
