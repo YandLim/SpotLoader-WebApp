@@ -47,6 +47,13 @@
     background-color: #11345C;
 }
 
+#downloading-progress {
+    display: none;
+}
+#status-text {
+    display: none;
+}
+
 .download-BTN {
     margin-top: 15px;
     margin-left: 15px;
@@ -217,4 +224,8 @@ a:hover {
     font-size: 24px;
     cursor: pointer;
     color: white;
+}
+
+.Status-Progress {
+    text-align: center;
 }

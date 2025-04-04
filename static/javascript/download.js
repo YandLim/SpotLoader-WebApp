@@ -46,6 +46,37 @@ try {
 function handleDownload() {
     let btn = this;
     btn.disabled = true; // Nonaktifkan tombol setelah diklik
+    let progressText = document.getElementById("downloading-progress");
+    let statusText = document.getElementById("status-text"); // Tambahkan elemen untuk status
+
+    progressText.innerText = "Starting . . .";
+    statusText.innerText = "Initializing...";
+
+    statusText.style.display = "block";
+    progressText.style.display = "block";
+
+    let eventSource = new EventSource("/download_progress");
+
+    eventSource.onmessage = function(event) {
+        let data = event.data.split("|"); // Pisahkan berdasarkan "|"
+        let progress = parseInt(data[0]); // Ambil persentase progress
+        let status = data[1]; // Ambil status teks
+
+        if (!isNaN(progress)) {
+            progressText.innerText = `Downloading ${progress}%`;
+        }
+
+        if (status) {
+            statusText.innerText = status;
+        }
+
+        if (progress >= 100) {
+            eventSource.close();
+            progressText.innerText = "✅ Download complete!";
+            statusText.style.display = "none"; // Sembunyikan status-text saat selesai
+            btn.disabled = false;            
+        }
+    };
 
     fetch("/run_download", {
         method: "POST",
@@ -54,8 +85,8 @@ function handleDownload() {
     .then(response => response.json())
     .then(data => {
         if (data.download_url) {
-            window.location.href = "/download_zip";
-            btn.disabled = false; // Redirect ke link download
+            window.location.href = data.download_url; // Redirect ke link download
+            btn.disabled = false;
         } else {
             document.getElementById("response-text").innerText = data.message;
             btn.disabled = false; // Aktifkan tombol jika gagal

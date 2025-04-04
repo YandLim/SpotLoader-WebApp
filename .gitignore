@@ -2,3 +2,4 @@ __pycache__
 .env
 static/finish_files/
 static/downloads/
+.vscode

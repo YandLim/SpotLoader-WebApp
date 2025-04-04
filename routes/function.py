@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, session, Blueprint, jsonify, send_file, stream_with_context, Response
+from flask import render_template, request, redirect, url_for, session, Blueprint, jsonify, send_file, stream_with_context, Response, copy_current_request_context
 from function.song import Main
 from function.zipped import zipped
 import shutil
@@ -152,87 +152,130 @@ def song_downloader():
             return redirect(url_for("users.login"))
         return render_template("download.html")
 
+
+download_progress = {}  # Dictionary global untuk progress
+zip_paths = {}  # Dictionary global untuk menyimpan lokasi ZIP'
+current_status_progress = {}
+
 @function_bp.route("/run_download", methods=["POST"])
 def download_clicked():
+    global download_progress, zip_paths, current_status_progress
+    session_id = session.get("session_id", "default")
+    progres_status = session.get("current_status", "Starting . . . ")
+
+    download_progress[session_id] = 0  # Reset progress
+    current_status_progress[progres_status] = "Starting"
+
     sanitize_name = []
     youtube_links = []
     song_file_name = []
     cover_pic_name = []
 
-    found_song = session["found_song"]
-    parent_name = session["parent_name"]
-    thumbnail_url = session["thumbnail_url"]
+    found_song = session.get("found_song", [])
+    parent_name = session.get("parent_name", "default")
+    thumbnail_url = session.get("thumbnail_url", [])
 
     DOWNLOAD_FOLDER = f"static/downloads/{parent_name}" if len(found_song) > 1 else "static/finish_files"
     PIC_FOLDER = f"static/pic/{parent_name}" if len(found_song) > 1 else "static/downloads/pic"
 
-    session["progress"] = 10
-    print("🧹 Cleaning file name")
-    for file_name in found_song:
-        for _ in range(max_tried):
-            try:
-                sanitized = re.sub(r'[<>:"/\\|?.*!@#$%^&]', '', file_name)
-                sanitize_name.append(sanitized)
-                break
-            except Exception as e:
-                print(f"Error {_}\nRetrying the procces")
-    print(sanitize_name)
 
-    session["progress"] = 20
+    current_progress = 5
+    download_progress[session_id] = current_progress
+    cleaning_progress = 10 / len(found_song)
+    current_status_progress[progres_status] = "🧹 Cleaning file name"
+    for file_name in found_song:
+        sanitized = re.sub(r'[<>:"/\\|?.*!@#$%^&]', '', file_name)
+        sanitize_name.append(sanitized)
+
+        current_progress += cleaning_progress
+        download_progress[session_id] = round(current_progress)
+    current_status_progress[progres_status] = "✨ Name clean"
+
+
+    download_progress[session_id] = 15
+    youtube_link_progress = 10 / len(found_song)
+    current_status_progress[progres_status] = "🔎 Looking for the song in YouTube"
     for song in found_song:
         youtube_link = Fm.search_youtube(song)
         youtube_links.append(youtube_link)
-    print(f"🎶 Found {len(youtube_links)} link")
-    
-    session["progress"] = 50 
+
+        current_progress += youtube_link_progress
+        download_progress[session_id] = round(current_progress)
+    current_status_progress[progres_status] = f"🎶 Found {len(youtube_links)} links"
+
+
+    download_progress[session_id] = 25
+    downloads_progress = 45 / len(found_song)
+    current_status_progress[progres_status] = "🗂️Downloading the songs"
     for url, name in zip(youtube_links, sanitize_name):
-        for _ in range(max_tried):
-            try:                        
-                file_name = Fm.download_song(url, name, DOWNLOAD_FOLDER)
-                song_file_name.append(file_name)
-                break
-            except Exception as e:
-                print(f"Error ocured:\n{e}\nRetrying the procces")
-    print(f"🎉 Success downloading {len(song_file_name)} Songs") 
+        file_name = Fm.download_song(url, name, DOWNLOAD_FOLDER)
+        song_file_name.append(file_name)
 
-    session["progress"] = 70
-    for i, (url, name) in enumerate(zip(thumbnail_url, sanitize_name)):
-        for _ in range(max_tried):
-            try:
-                cover_name = Fm.get_thumbnail(url, name, PIC_FOLDER)
-                cover_pic_name.append(cover_name)
-                break
-            except Exception as e:
-                print(f"Error ocured:\n{e}\nRetrying the procces")
-    print("👌 Got'em") 
+        current_progress += downloads_progress
+        download_progress[session_id] = round(current_progress)
+    current_status_progress[progres_status] = f"🎉 Successfully downloaded {len(song_file_name)} Songs"
 
-    session["progress"] = 85  
-    for i, (song, cover_pic) in enumerate(zip(song_file_name, cover_pic_name)):
-        for _ in range(max_tried):
-            try:
-                Fm.add_thumbnail(song, cover_pic, DOWNLOAD_FOLDER)
-                break
-            except:
-                continue
-    print("🎵 All thumbnails updated successfully!") 
 
-    session["progress"] = 100
+    download_progress[session_id] = 70
+    download_thumbnail_progress = 10 / len(found_song)
+    current_status_progress[progres_status] = "🖼️Downloading the thumbnail"
+    for url, name in zip(thumbnail_url, sanitize_name):
+        cover_name = Fm.get_thumbnail(url, name, PIC_FOLDER)
+        cover_pic_name.append(cover_name)
+
+        current_progress += download_thumbnail_progress
+        download_progress[session_id] = round(current_progress)
+    current_status_progress[progres_status] = "👌 Got'em"
+
+
+    download_progress[session_id] = 80
+    changing_thumbnail_progress = 10 / len(found_song)
+    current_status_progress[progres_status] = "🎨 Changing the song's thumbnail"
+    for song, cover_pic in zip(song_file_name, cover_pic_name):
+        Fm.add_thumbnail(song, cover_pic, DOWNLOAD_FOLDER)
+
+        current_progress += changing_thumbnail_progress
+        download_progress[session_id] = round(current_progress)
+    current_status_progress[progres_status] = "🎵 All thumbnails updated successfully!"
+
+
+    download_progress[session_id] = 95
     store_path = Zp.create_zip(parent_name, DOWNLOAD_FOLDER) if len(found_song) > 1 else f"static/finish_files/{found_song[0]}.mp3"
-    session["zip_path"] = store_path
+    zip_paths[session_id] = store_path  # Simpan path ZIP di dictionary
+
 
     if len(found_song) > 1:
         shutil.rmtree(DOWNLOAD_FOLDER)
-
     shutil.rmtree(PIC_FOLDER)
+    download_progress[session_id] = 100
 
     return jsonify({
         "message": "Download is ready!",
-        "download_url": url_for('static', filename=f'zipped/{parent_name}.zip', _external=True)
+        "download_url": url_for('function.DOWNLOAD', _external=True)
     })
 
 
 @function_bp.route("/download_zip")
 def DOWNLOAD():
-    zip_path = session["zip_path"]
-    session.pop("zip_path", None)
+    session_id = session.get("session_id", "default")
+    zip_path = zip_paths.get(session_id)
+
+    if not zip_path:
+        return jsonify({"error": "File not found"}), 404
+
     return send_file(zip_path, as_attachment=True)
+
+
+@function_bp.route("/download_progress")
+def download_progress_event():
+    session_id = session.get("session_id", "default")  # Ambil session_id di awal
+    progres_status = session.get("current_status", "Starting . . . ")
+
+    @copy_current_request_context  # ⬅ FIX: Copy request context ke function ini
+    def generate():
+        while True:
+            progress = download_progress.get(session_id, 0)
+            current_status = current_status_progress.get((progres_status), "Starting...")  # ⬅ Status proses
+            yield f"data: {progress}|{current_status}\n\n"
+            time.sleep(1)  # Update setiap 1 detik
+    return Response(generate(), mimetype="text/event-stream")

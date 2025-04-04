@@ -50,7 +50,10 @@
                                 </div>
                             </div>
                         </div>
-                        <p id="downloading-text"></p>
+                        <div class="Status-Progress">
+                            <p id="downloading-progress">Downloading... 0%</p>
+                            <p id="status-text">Waiting...</p>    
+                        </div>
                         <script src="{{ url_for ('static', filename='javascript/download.js') }}"></script>
 
                     {% elif type == "playlist" %}
@@ -77,7 +80,10 @@
                                 </div>
                             </div>
                         </div>
-                        <p id="downloading-text"></p>
+                        <div class="Status-Progress">
+                            <p id="downloading-progress">Downloading... 0%</p>
+                            <p id="status-text">Waiting...</p>    
+                        </div>
                         <script src="{{ url_for ('static', filename='javascript/download.js') }}"></script>
 
                     {% elif type == "song" %}
@@ -93,11 +99,13 @@
                                     </p>  
                                     <p><br/><br/></p>
                                     <button class="btn btn-success download-BTN" id="download-song-BTN" data-song-type="song">Download Song</button>
-                                    <script src="{{ url_for ('static', filename='javascript/download.js') }}"></script>
                                 </div>
                             </div>
                         </div>
-                        <p id="downloading-text"></p>
+                        <div class="Status-Progress">
+                            <p id="downloading-progress">Downloading... 0%</p>
+                            <p id="status-text">Waiting...</p>    
+                        </div>
                         <script src="{{ url_for ('static', filename='javascript/download.js') }}"></script>
                     {% endif %}
                 </div>
