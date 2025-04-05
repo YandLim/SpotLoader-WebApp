@@ -63,6 +63,10 @@ def register():
         user_gender = request.form["gender"].upper()
         user_dob = request.form["dob"]
 
+        exist_email = db.call_data("Users", "password", "email", user_email)
+        if exist_email is None:
+            flash("The email account is been used try login", "info")
+
         db.add_user(user_email, user_passw, user_name, user_gender, user_dob)
 
         session.update({

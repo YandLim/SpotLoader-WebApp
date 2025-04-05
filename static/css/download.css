@@ -10,6 +10,7 @@ a:hover {
 #MainTitle {
     margin-top: 20px;
     color: #CACACA;
+    padding-top: 15px;
 }
 
 #abouttitle {
@@ -22,15 +23,16 @@ a:hover {
 #flash-msgs {
     color: white;
     text-align: center;
+    padding-top: 10px;
 }
 
 #search-results {
     display: flex;
     margin: 10px;
-    max-width: 850px;
+    max-width: 98%;
     background-color: #171717;
     width: 100%; /* Make it take full width */
-    padding: 50px;
+    padding: 3vw;
     border-radius: 5px;
     text-align: left;
     margin-top: 10px;
@@ -40,7 +42,6 @@ a:hover {
 #see-all-BTN {
     background-color: #113D70;
     border-color: #113D70;
-    margin-left: 15px;
     width: 200px;
     margin-top: 40px;
 }
@@ -50,31 +51,39 @@ a:hover {
 }
 
 #downloading-progress {
-    display: none;
+    display: block;
     width: 50%; 
     height: 50px;
 }
 
 #status-text {
-    display: none;
+    display: block;
 }
 
 #progress-precentage {
-    display: none;    
+    display: block;    
+}
+
+#about-pharagraph {
+    padding-bottom: 25px;
+}
+
+#song-link {
+    margin-top: 2vw;
+    margin-bottom: 1vw;
+    padding: 2vw;
 }
 
 .download-BTN {
-    margin-top: 15px;
-    margin-left: 15px;
+    margin-top: 3vw;
     width: 200px;
 }
 
 .maincontainer {
-    width: 80%;
-    max-width: 1000px;
+    width: 96%;
+    max-width: 100%;
     margin: 0 auto;
     margin-bottom: 20px;
-    padding: 20px;
     text-align: center;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -83,7 +92,7 @@ a:hover {
 
 .Title {
     text-align: center;
-    margin: 50px;
+    margin-bottom: 50px;
     color: #CACACA;
 }
 
@@ -98,12 +107,12 @@ a:hover {
     display: flex;
     flex-direction: column;
     color: #CACACA;
-    font-family: Ahorani;
-    font-size: 25px;
-    width: 98%;
-    max-width: 900px;
+    font-family: "Ahorani";
+    font-size: 3vw;
+    width: 100%;
+    max-width: 98%;
     margin: 0 auto;
-    padding: 50px;
+    padding: 2%;
     border: 7px solid #141918;
     border-radius: 10px;
     background-color: #5F7A75;
@@ -131,7 +140,8 @@ a:hover {
 
 .cover_pic {
     background-color: white;
-    width: 200px;
+    width: 25vw;
+    height: 25vw;
     margin-bottom: 5px;
 }
 
@@ -146,6 +156,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     text-align: left;
+    margin-left: 3vw;
     font-size: 18px;
     width: 60%;
 }

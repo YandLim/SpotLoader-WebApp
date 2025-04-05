@@ -9,8 +9,6 @@ class Database:
             database="SpotSearcher"
         )
 
-        self.mycursor = self.db.cursor()
-
         # self.mycursor.execute("CREATE DATABASE SpotSearcher")
         self.Q1 = """
             CREATE TABLE Users (
@@ -26,17 +24,32 @@ class Database:
 
     def add_user(self, email, passw, name, gender, dob):
         Q = "INSERT INTO Users (email, password, name, gender, dob) VALUES (%s, %s, %s, %s, %s)"
-        self.mycursor.execute(Q, (email, passw, name, gender, dob))
+        mycursor = self.db.cursor()
+        mycursor.execute(Q, (email, passw, name, gender, dob))
         self.db.commit()
+        mycursor.close()
+        return 
 
     def call_data(self, table_name, wanted_entry, entry, user_entry):
-        Q = f"SELECT {wanted_entry} FROM {table_name} WHERE {entry} = %s"
-        self.mycursor.execute(Q, (user_entry,))
-        result = self.mycursor.fetchone()
-        return result
+        try:
+            Q = f"SELECT {wanted_entry} FROM {table_name} WHERE {entry} = %s"
+            mycursor = self.db.cursor()
+            mycursor.execute(Q, (user_entry,))
+            result = mycursor.fetchone()
+
+            while mycursor.nextset():
+                pass
+            
+            mycursor.close()
+            return result
+        except:
+            mycursor.close()
+            return None
     
     def delete_user(self, wanted_category, category, table_name):
         Q = f"DELETE FROM {table_name} WHERE {wanted_category} = %s"
-        self.mycursor.execute(Q, (category,))
+        mycursor = self.db.cursor()
+        mycursor.execute(Q, (category,))
         self.db.commit()
+        mycursor.close()
         return

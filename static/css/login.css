@@ -4,7 +4,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 #register-btn {
@@ -18,14 +17,25 @@ body {
 }
 
 .Login-container {
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin: 5vw;
     background-color: #202528;
     padding: 30px;
     border-radius: 20px;
-    width: 100%;
-    max-width: 450px;
+    width: 95%;
+    height: 95%;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+.form-group {
+    width: 50%;
+    margin: 10px auto;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-family: "Ahorani";
+    color: white;
 }
 
 .form-control {

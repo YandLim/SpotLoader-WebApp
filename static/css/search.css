@@ -1,5 +1,5 @@
 #MainTitle {
-    margin-top: 20px;
+    padding-top: 50px;
     color: #CACACA;
 }
 
@@ -13,6 +13,7 @@
 #song-name {
     align-items: flex-start;
     justify-content: flex-start;
+    margin-top: 1vw;
     width: 50%;
     border: 5px solid #143532;
 }
@@ -20,32 +21,37 @@
 #result-qty {
     width: 25%;
     border: 5px solid #143532;
+    margin-top: 1vw;
 }
 
 #flash-msgs {
     color: white;
     text-align: center;
+    padding-top: 10px;
 }
 
 #search-results {
     display: flex;
     margin: 10px;
-    max-width: 850px;
+    max-width: 98%;
     background-color: #171717;
     width: 100%; /* Make it take full width */
-    padding: 50px;
+    padding: 3vw;
     border-radius: 5px;
     text-align: left;
     margin-top: 10px;
     flex-direction: column;
 }
 
+#about-pharagraph {
+    padding-bottom: 25px;
+}
+
 .maincontainer {
-    width: 80%;
-    max-width: 1000px;
+    width: 96%;
+    max-width: 100%;
     margin: 0 auto;
     margin-bottom: 20px;
-    padding: 20px;
     text-align: center;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -54,7 +60,7 @@
 
 .Title {
     text-align: center;
-    margin: 50px;
+    margin-bottom: 50px;
     color: #CACACA;
 }
 
@@ -74,17 +80,21 @@
     display: flex;
     flex-direction: column;
     color: #CACACA;
-    font-family: Ahorani;
-    font-size: 25px;
-    width: 98%;
-    max-width: 900px;
+    font-family: "Ahorani";
+    font-size: 3vw;
+    width: 100%;
+    max-width: 98%;
     margin: 0 auto;
-    padding: 50px;
+    padding: 2%;
     border: 7px solid #141918;
     border-radius: 10px;
     background-color: #5F7A75;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 50px;
+}
+
+.btn-success {
+    margin-top: 1vw;
 }
 
 .form-control {
@@ -123,7 +133,8 @@
 
 .cover_pic {
     background-color: white;
-    width: 200px;
+    width: 25%;
+    height: 25%;
     margin-bottom: 5px;
 }
 

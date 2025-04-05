@@ -6,13 +6,14 @@
 #flash-msgs {
     color: white;
     text-align: center;
+    padding-top: 10px;
 }
 
 #confirmation {
     display: block;
     text-align: center;
     margin: 0 auto;
-    width: 350px;
+    width: 85%;
     height: 35px;
     border-radius: 10px;
     margin-bottom: 30px;

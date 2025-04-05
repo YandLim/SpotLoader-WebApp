@@ -16,7 +16,6 @@
         <h1 class="Title", id="MainTitle"><b>The Spotify Downloader</b></h1>
         <div class="container">
             <form method="post" class="form-group search-container">
-                <label for="song-link">Spotify link</label>
                 <input type="text" id="song-link" class="form-control" name="link-input" placeholder="Enter spotify song's link" required>
                 <button class="btn btn-success">Search</button>
             </form>
@@ -95,7 +94,7 @@
                                             {{ artist }}{% if not loop.last %}, {% endif %}
                                         {% endfor %}
                                     </p>  
-                                    <p><br/><br/></p>
+                                    <p><br/></p>
                                     <button class="btn btn-success download-BTN" id="download-song-BTN" data-song-type="song">Download Song</button>
                                 </div>
                             </div>
@@ -117,7 +116,7 @@
 
         </div>
         <h2 id="abouttitle" class="Title">About</h2>
-        <p class="Pharagraph">
+        <p class="Pharagraph" id="about-pharagraph">
             Download spotify song using song's link. And yes you can download album and playlist as well.
         </p>   
     </div>
