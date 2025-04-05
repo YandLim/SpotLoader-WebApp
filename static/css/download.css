@@ -42,7 +42,7 @@ a:hover {
 #see-all-BTN {
     background-color: #113D70;
     border-color: #113D70;
-    width: 200px;
+    width: 150px;
     margin-top: 40px;
 }
 
@@ -57,7 +57,7 @@ a:hover {
 }
 
 #status-text {
-    display: block;
+    display: none;
 }
 
 #progress-precentage {
@@ -76,7 +76,8 @@ a:hover {
 
 .download-BTN {
     margin-top: 3vw;
-    width: 200px;
+    width: 150px;
+    margin-bottom: 10px;
 }
 
 .maincontainer {
@@ -206,5 +207,5 @@ a:hover {
 
 .Status-Progress {
     text-align: center;
-    margin: 10px auto; /* Auto untuk center horizontal */
+    margin: 1vw auto; /* Auto untuk center horizontal */
 }
