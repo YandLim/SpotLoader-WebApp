@@ -1,17 +1,18 @@
+# Importing needed modules and libraries
 from flask import current_app
+from mutagen.id3 import ID3, APIC, ID3NoHeaderError
+from mutagen.mp3 import MP3
 from requests import post, get
-import base64
-import json
-from dotenv import load_dotenv
+from yt_dlp import YoutubeDL
 import urllib.request
 import urllib.parse
-import re
 import requests
-from yt_dlp import YoutubeDL
-from mutagen.mp3 import MP3
-from mutagen.id3 import ID3, APIC, ID3NoHeaderError
+import base64
+import json
+import re
 import os
 
+# Define the all-in class
 class Main:
     # Get the token for authentication
     def get_token(self):
@@ -144,6 +145,7 @@ class Main:
         return found_link
     
 
+    # Downloading the song from YouTube url to mp3
     def download_song(self, url, name, DOWNLOAD_FOLDER):    
         save_path = os.path.join(DOWNLOAD_FOLDER, name)
 
@@ -170,6 +172,7 @@ class Main:
         return store_name
     
 
+    # Download the thumbnail of the song
     def get_thumbnail(self, url, raw_name, PIC_FOLDER):
         if not os.path.exists(PIC_FOLDER):
                 os.makedirs(PIC_FOLDER)
@@ -212,3 +215,4 @@ class Main:
             ))
 
         audio.save()  # Save for each changes
+        

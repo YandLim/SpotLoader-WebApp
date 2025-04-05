@@ -45,11 +45,10 @@ try {
 
 function handleDownload() {
     let btn = this;
-    btn.disabled = true; // Nonaktifkan tombol setelah diklik
+    btn.disabled = true;
     let progressBar = document.getElementById("downloading-progress");
-    let statusText = document.getElementById("status-text"); // Tambahkan elemen untuk status
-    let precentage = document.getElementById("progress-precentage"); // Tambahkan elemen untuk status
-
+    let statusText = document.getElementById("status-text");
+    let precentage = document.getElementById("progress-precentage");
     statusText.innerText = "Initializing...";
 
     precentage.style.display = "block";
@@ -59,9 +58,9 @@ function handleDownload() {
     let eventSource = new EventSource("/download_progress");
 
     eventSource.onmessage = function(event) {
-        let data = event.data.split("|"); // Pisahkan berdasarkan "|"
-        let progress = parseInt(data[0]); // Ambil persentase progress
-        let status = data[1]; // Ambil status teks
+        let data = event.data.split("|");
+        let progress = parseInt(data[0]);
+        let status = data[1];
 
         if (!isNaN(progress)) {
             precentage.innerText = `${progress}%`;
@@ -75,8 +74,8 @@ function handleDownload() {
         if (progress >= 100) {
             eventSource.close();
             statusText.innerText = "✅ Download complete!";
-            progressBar.style.display = "none"; // Sembunyikan status-text saat selesai
-            precentage.style.display = "none"; // Sembunyikan status-text saat selesai
+            progressBar.style.display = "none";
+            precentage.style.display = "none";
             btn.disabled = false;            
         }
     };
@@ -88,15 +87,15 @@ function handleDownload() {
     .then(response => response.json())
     .then(data => {
         if (data.download_url) {
-            window.location.href = data.download_url; // Redirect ke link download
+            window.location.href = data.download_url;
             btn.disabled = false;
         } else {
             document.getElementById("response-text").innerText = data.message;
-            btn.disabled = false; // Aktifkan tombol jika gagal
+            btn.disabled = false;
         }
     })
     .catch(error => {
         console.error("Error:", error);
-        btn.disabled = false; // Pastikan tombol diaktifkan kembali jika ada error
+        btn.disabled = false;
     });
 }
