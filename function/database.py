@@ -34,3 +34,9 @@ class Database:
         self.mycursor.execute(Q, (user_entry,))
         result = self.mycursor.fetchone()
         return result
+    
+    def delete_user(self, wanted_category, category, table_name):
+        Q = f"DELETE FROM {table_name} WHERE {wanted_category} = %s"
+        self.mycursor.execute(Q, (category,))
+        self.db.commit()
+        return

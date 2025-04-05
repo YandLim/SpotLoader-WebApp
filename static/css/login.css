@@ -7,6 +7,16 @@ body {
     height: 100vh;
 }
 
+#register-btn {
+    margin-bottom: 6px;
+    width: 100px;
+}
+
+#flash-msgs {
+    color: #bc8686;
+    text-align: center;
+}
+
 .Login-container {
     margin-top: 50px;
     margin-bottom: 50px;
@@ -44,12 +54,3 @@ body {
     background-color: #1e8644; /* Darker Green on Hover */
 }
 
-#register-btn {
-    margin-bottom: 6px;
-    width: 100px;
-}
-
-#flash-msgs {
-    color: #bc8686;
-    text-align: center;
-}

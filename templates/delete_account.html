@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block extra_css %} <link rel="stylesheet" href="{{ url_for ('static', filename='css/delete_account.css') }}"> {% endblock %}
+{% block title %}The Spotloader{% endblock %}
+
+{% block content %}
+    <div class="maincontainer">
+        <div id="flash-msgs">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                        <p>{{msg}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        {% if delete %}
+            <h1 class="Title", id="MainTitle"><b>Your Account has been deleted permanently</b></h1>
+            <a href="/" class="BTN">Home</a>
+        {% else %}
+            <h1 class="Title", id="MainTitle"><b>Are you sure want to delete your account with all your data?</b></h1>
+            <form class="delete-confirmation Pharagraph form-group" action="/acount_delete" method="post">
+                <label for="confirmation">To continue pls type "DELETE {{ user_name }} {{ email }}"</label>
+                <input type="text" id="confirmation" name="user-confirmation" placeholder="Pls input the coresponding input">
+                <button id="confirm-btn" class="BTN" type="submit">Confirm</button>
+            </form>
+        {% endif %}
+{% endblock %}
